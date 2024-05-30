@@ -11,10 +11,9 @@ export async function GET(request) {
         }
 
         const result = await sql`
-            SELECT protected_data, slot, price
+            SELECT protected_data, price
             FROM Providers
-            WHERE platform = ${platformName}
-            AND slot > 0;
+            WHERE platform = ${platformName};
         `;
 
         return NextResponse.json({ protectedData: result.rows }, { status: 200 });
