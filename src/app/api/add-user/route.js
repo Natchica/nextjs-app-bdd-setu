@@ -4,17 +4,17 @@ import { NextResponse } from 'next/server';
 export async function GET(request) {
     const { searchParams } = new URL(request.url);
     const userWalletAddress = searchParams.get('userWalletAddress');
-    const protectedData = searchParams.get('protectedData');
     const platformName = searchParams.get('platformName');
+    const protectedData = searchParams.get('protectedData');
 
     try {
-        if (!userWalletAddress || !protectedData || !platformName) {
+        if (!userWalletAddress || !platformName || !protectedData) {
             throw new Error('All parameters are required');
         }
 
         await sql`
-            INSERT INTO Providers (wallet_address, protected_data, platform)
-            VALUES (${userWalletAddress}, ${protectedData}, ${platformName});
+            INSERT INTO Users (wallet_address, platform, protected_data)
+            VALUES (${userWalletAddress}, ${platformName}, ${protectedData});
         `;
 
         const users = await sql`SELECT * FROM Users;`;
