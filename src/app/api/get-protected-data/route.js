@@ -11,7 +11,7 @@ export async function GET(request) {
         }
 
         const result = await sql`
-            SELECT protected_data, price
+            SELECT protected_data, price, slot
             FROM Providers
             WHERE platform = ${platformName};
         `;
